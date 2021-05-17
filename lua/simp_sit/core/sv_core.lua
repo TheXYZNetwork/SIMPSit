@@ -82,7 +82,6 @@ function SIMPSit.Core.OptimalRotation(pos)
 end
 
 function SIMPSit.Core.CanSitHere(ply, pos, pitch, ent)
-	print(ply, pos, pitch, ent)
 	-- Check how far away they are
 	if ply:GetPos():DistToSqr(pos) > SIMPSit.Config.MaxDistance then return false end
 	-- No sitting on players anymore :)
