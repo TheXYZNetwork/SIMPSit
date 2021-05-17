@@ -82,12 +82,14 @@ function SIMPSit.Core.OptimalRotation(pos)
 end
 
 function SIMPSit.Core.CanSitHere(ply, pos, pitch, ent)
+	print(ply, pos, pitch, ent)
 	-- Check how far away they are
 	if ply:GetPos():DistToSqr(pos) > SIMPSit.Config.MaxDistance then return false end
 	-- No sitting on players anymore :)
 	if ent:IsPlayer() then return false end
 	-- Pitch, to ensure they don't sit on the side of a wall
 	if pitch > SIMPSit.Config.MaxPitch then return false end
+	if pitch < -SIMPSit.Config.MaxPitch then return false end
 
 	-- Backwards compatibility with old sit system
 	local canSit, sitRotation = hook.Run("ShouldAllowSit", ply, pos, pitch, ent)
