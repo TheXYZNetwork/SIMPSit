@@ -3,7 +3,6 @@ local optimalOffset = Vector(0, 0, 5)
 local optimalOffsetHeight = Vector(0, 0, -20)
 
 concommand.Add("sit", function(ply)
-
 	if not SIMPSit.Cooldown[ply:SteamID64()] then
 		SIMPSit.Cooldown[ply:SteamID64()] = 0
 	end
@@ -113,6 +112,7 @@ function SIMPSit.Core.Sit(ply, pos, ent, rotation, pitch)
 
 	if IsValid(ent) and (not ent:IsWorld()) then
 		chair:SetParent(ent)
+		ply:DropObject()
 	end
 	chair:SetModel("models/nova/airboat_seat.mdl")
 	chair:SetPos(pos - optimalOffset)
