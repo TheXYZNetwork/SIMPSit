@@ -3,14 +3,17 @@ local optimalOffset = Vector(0, 0, 5)
 local optimalOffsetHeight = Vector(0, 0, -20)
 
 concommand.Add("sit", function(ply)
-	if not SIMPSit.Cooldown[ply:SteamID64()] then
-		SIMPSit.Cooldown[ply:SteamID64()] = 0
+	local curTime = CurTime()
+	local steamID = ply:SteamID64()
+		
+	if not SIMPSit.Cooldown[steamID] then
+		SIMPSit.Cooldown[steamID] = 0
 	end
 
-	if SIMPSit.Cooldown[ply:SteamID64()] > CurTime() then return end
+	if SIMPSit.Cooldown[steamID] > curTime then return end
 
 	-- We add a minor cooldown as spamming could cause issues, there's a lot of tracing involved.
-	SIMPSit.Cooldown[ply:SteamID64()] = CurTime() + 0.5
+	SIMPSit.Cooldown[steamID] = curTime + 0.5
 
 	local eyeTrace = ply:GetEyeTrace()
 	local pos = eyeTrace.HitPos
