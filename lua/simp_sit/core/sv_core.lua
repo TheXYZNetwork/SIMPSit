@@ -95,7 +95,7 @@ function SIMPSit.Core.CanSitHere(ply, pos, pitch, ent)
 	-- Backwards compatibility with old sit system
 	local canSit, sitRotation = hook.Run("ShouldAllowSit", ply, pos, pitch, ent)
 	if not (canSit == nil) then
-		return canShit, sitRotation or SIMPSit.Core.OptimalRotation(pos) or 0
+		return canSit, sitRotation or SIMPSit.Core.OptimalRotation(pos) or 0
 	end
 
 	local rotation = SIMPSit.Core.OptimalRotation(pos)
