@@ -130,6 +130,14 @@ function SIMPSit.Core.Sit(ply, pos, ent, rotation, pitch)
 		chair:SetNotSolid(true)
 	end
 
+	ent.SIMPSitChair = chair 
+	chair:CallOnRemove('UnTie', function(entChair)
+		local parent = entChair:GetParent()
+		if (IsValid(parent)) then
+			parent.SIMPSitChair = nil
+		end
+	end)
+
 	local phys = chair:GetPhysicsObject()
 	if IsValid(phys) then
 		phys:Sleep()
@@ -181,4 +189,29 @@ hook.Add("PlayerDisconnected", "SIMPSit:Remove", function(ply)
 	if not chair.SIMPSit then return end
 
 	chair:Remove()
+end)
+
+hook.Add("CanUndo", "SIMPSit:AntiAbuse", function(ply, tUndo)
+	if string.lower(tUndo.Name):find("precision") then
+		local fn = tUndo.Functions[1]
+		local data = fn and fn[2]
+		local ent = data and data[1]
+
+		if IsValid(ent) and IsValid(ent.SIMPSitChair) then
+			return false
+		end
+	end
+end)
+
+hook.Add("CanTool", "SIMPSit:AntiAbuse", function(ply, tr, toolname, tool, button)
+	local trEnt = tr.Entity
+	if IsValid(trEnt) and IsValid(trEnt.SIMPSitChair) then
+		return false
+	end
+end)
+
+hook.Add("PhysgunPickup", "SIMPSit:AntiAbuse", function(ply, trEnt)
+	if IsValid(trEnt) and IsValid(trEnt.SIMPSitChair) then
+		return false
+	end
 end)
