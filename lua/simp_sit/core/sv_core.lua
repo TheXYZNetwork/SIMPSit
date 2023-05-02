@@ -164,6 +164,7 @@ function SIMPSit.Core.Sit(ply, pos, ent, rotation, pitch)
 
 	chair.SIMPIdealLeaveSpace = ply:GetPos()
 	ply:EnterVehicle(chair)
+	ply:SetEyeAngles(Angle(0,90,0))
 end
 
 
