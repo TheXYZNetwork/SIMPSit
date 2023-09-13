@@ -193,7 +193,7 @@ hook.Add("PlayerDisconnected", "SIMPSit:Remove", function(ply)
 end)
 
 hook.Add("CanUndo", "SIMPSit:AntiAbuse", function(ply, tUndo)
-	if string.lower(tUndo.Name):find("precision") then
+	if isstring(tUndo.Name) and string.lower(tUndo.Name):find("precision") then
 		local fn = tUndo.Functions[1]
 		local data = fn and fn[2]
 		local ent = data and data[1]
